@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101d35">
+<title>MN Fasada Quality Control</title>
+<style>
+:root{--navy:#101d35;--navy2:#192b49;--gold:#c9a45c;--ink:#182338;--muted:#697589;--line:#e4e8ef;--bg:#f4f6fa;--white:#fff;--green:#16845b;--red:#b94b4b;--shadow:0 12px 32px rgba(16,29,53,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{background:var(--navy);color:white;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:5;box-shadow:0 4px 20px #101d3522}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-weight:800;letter-spacing:-1px}.brand strong{display:block;letter-spacing:.08em;font-size:14px}.brand small{color:#c3cddd;font-size:10px;letter-spacing:.12em}.top-actions{display:flex;align-items:center;gap:10px}.lang{background:#243754;border:1px solid #53627a;color:#fff;border-radius:9px;padding:8px 10px}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1440px;margin:auto;min-height:calc(100vh - 74px)}
+.sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px}.side-label{font-size:10px;letter-spacing:.13em;color:#8993a3;font-weight:800;padding:0 12px;margin:12px 0 8px}.nav{width:100%;border:0;background:transparent;text-align:left;padding:12px;border-radius:10px;color:#526078;display:flex;gap:12px;align-items:center;margin:3px 0}.nav.active,.nav:hover{background:#edf1f7;color:var(--navy);font-weight:700}.nav .ico{width:22px;text-align:center;color:var(--gold);font-size:18px}
+main{padding:28px;min-width:0}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:22px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.15em;font-weight:800}.page-head h1{font-size:27px;margin:3px 0;color:var(--navy)}.sub{color:var(--muted);margin:0}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700}.primary{background:var(--navy);color:#fff}.primary:hover{background:var(--navy2)}.secondary{background:#fff;border:1px solid var(--line);color:var(--navy)}.gold{color:var(--navy);background:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow)}.metric-label{color:var(--muted);font-size:12px}.metric{font-size:30px;font-weight:800;color:var(--navy);margin:5px 0}.metric-note{font-size:11px;color:#8a94a4}.section{margin-top:22px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.section-title h2{font-size:17px;margin:0;color:var(--navy)}.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:560px}th,td{text-align:left;padding:13px 15px;border-bottom:1px solid var(--line);font-size:13px}th{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#8993a3;background:#fafbfd}tr:last-child td{border-bottom:0}.pill{display:inline-block;border-radius:30px;padding:4px 9px;font-size:10px;font-weight:800;background:#eef2f7;color:#536078}.pill.open{background:#fff2df;color:#96611b}.pill.done{background:#e7f6ef;color:#18764e}.pill.high{background:#fdeaea;color:#a33b3b}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:15px}.empty{padding:35px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--navy);margin-bottom:5px}.notice{padding:13px 15px;border-radius:11px;background:#fff8e9;border:1px solid #f0dfb8;color:#765b25;font-size:12px;margin-bottom:18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:#526078}.field input,.field select,.field textarea{width:100%;border:1px solid #dce2eb;border-radius:9px;padding:11px;background:#fff;color:var(--ink)}.field textarea{min-height:90px;resize:vertical}.modal{position:fixed;inset:0;background:#101d3588;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.show{display:flex}.modal-box{width:min(560px,100%);background:#fff;border-radius:17px;padding:22px;box-shadow:0 25px 80px #0003;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modal-head h2{margin:0;color:var(--navy);font-size:19px}.close{border:0;background:#eef1f5;border-radius:50%;width:34px;height:34px;font-size:20px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:17px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 16px;border-radius:10px;display:none;z-index:20;box-shadow:var(--shadow);font-size:13px}
+.mobile-nav{display:none}.footer{color:#929baa;font-size:11px;margin-top:28px;text-align:center}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
+@media(max-width:650px){.topbar{padding:12px 15px}.brand strong{font-size:12px}.brand small{font-size:8px}.mark{width:37px;height:37px}.layout{display:block}.sidebar{display:none}main{padding:20px 14px 85px}.page-head h1{font-size:23px}.page-head{align-items:center}.grid{gap:9px}.card{padding:14px}.metric{font-size:25px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:7px 5px calc(7px + env(safe-area-inset-bottom));justify-content:space-around;z-index:6}.mobile-nav button{border:0;background:transparent;color:#697589;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px}.mobile-nav button.active{color:var(--navy);font-weight:800}.mobile-nav span{font-size:19px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.top-actions .hide-mobile{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="mark">MN</div><div><strong>MN FASADA</strong><small>QUALITY CONTROL</small></div></div>
+ <div class="top-actions"><button class="lang" id="langBtn">BS / DE</button><span class="hide-mobile" style="font-size:12px;color:#d0d8e4">DEMO • lokalni prikaz</span></div>
+<div class="top-actions" id="authActions" style="margin-left:auto"><span id="authStatus" style="font-size:12px;color:#d0d8e4">Supabase: nije povezan</span><button class="lang" id="signOutBtn" hidden>Odjava</button></div></header>
+<div class="layout">
+ <aside class="sidebar">
+  <div class="side-label" data-i="workspace">RADNI PROSTOR</div>
+  <button class="nav active" data-page="dashboard"><span class="ico">▦</span><span data-i="dashboard">Kontrolna tabla</span></button>
+  <button class="nav" data-page="projects"><span class="ico">⌂</span><span data-i="projects">Objekti</span></button>
+  <button class="nav" data-page="inspections"><span class="ico">☑</span><span data-i="inspections">Kontrole</span></button>
+  <button class="nav" data-page="defects"><span class="ico">⚠</span><span data-i="defects">Nedostaci</span></button>
+  <div class="side-label" data-i="documents">DOKUMENTACIJA</div>
+  <button class="nav" data-page="reports"><span class="ico">▤</span><span data-i="reports">Izvještaji</span></button>
+  <button class="nav" data-page="team"><span class="ico">♙</span><span data-i="team">Korisnici i uloge</span></button>
+ </aside>
+ <main id="main"></main>
+</div>
+<nav class="mobile-nav">
+ <button class="active" data-page="dashboard"><span>▦</span><small data-i="dashboard">Pregled</small></button>
+ <button data-page="projects"><span>⌂</span><small data-i="projects">Objekti</small></button>
+ <button data-page="defects"><span>⚠</span><small data-i="defects">Nedostaci</small></button>
+ <button data-page="reports"><span>▤</span><small data-i="reports">Izvještaji</small></button>
+ <button data-page="team"><span>♙</span><small data-i="team">Tim</small></button>
+</nav>
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle"></h2><button class="close" id="closeModal">×</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<div id="authGate" style="position:fixed;inset:0;background:#101d35ee;z-index:50;display:flex;align-items:center;justify-content:center;padding:18px">
+ <div style="background:white;border-radius:18px;padding:24px;width:min(440px,100%);box-shadow:0 25px 80px #0005">
+  <div style="color:#c9a45c;font-size:11px;font-weight:800;letter-spacing:.15em">MN FASADA CONSULTING</div>
+  <h2 style="color:#101d35;margin:6px 0 4px">Prijava u Quality Control</h2>
+  <p style="color:#697589;font-size:13px;margin-top:0">Pristup je omogućen samo registrovanim korisnicima.</p>
+  <label style="display:block;font-size:12px;font-weight:700;margin:12px 0 5px">E-mail</label>
+  <input id="authEmail" type="email" autocomplete="username" placeholder="ime@firma.at" style="width:100%;padding:12px;border:1px solid #dce2eb;border-radius:9px">
+  <label style="display:block;font-size:12px;font-weight:700;margin:12px 0 5px">Lozinka</label>
+  <input id="authPassword" type="password" autocomplete="current-password" placeholder="Lozinka" style="width:100%;padding:12px;border:1px solid #dce2eb;border-radius:9px">
+  <button id="loginBtn" class="btn primary" style="width:100%;margin-top:16px">Prijava</button>
+  <button id="signupBtn" class="btn secondary" style="width:100%;margin-top:8px">Registracija</button>
+  <p id="authMessage" style="font-size:12px;color:#697589;margin-bottom:0"></p>
+  <p style="font-size:10px;color:#8993a3;margin-top:14px">Ako registracija zahtijeva potvrdu e-maila, provjerite pristiglu poštu. Nikada ne šaljite lozinku drugoj osobi.</p>
+ </div>
+</div>
+
+<script src="./config.js"></script>
+<script>
+const dict={
+bs:{workspace:"RADNI PROSTOR",dashboard:"Kontrolna tabla",projects:"Objekti",inspections:"Kontrole",defects:"Nedostaci",documents:"DOKUMENTACIJA",reports:"Izvještaji",team:"Korisnici i uloge",overview:"PREGLED POSLOVANJA",welcome:"Dobro došli u MN Fasada Quality Control",subtitle:"Pregled kontrole kvaliteta fasaderskih radova.",newProject:"+ Novi objekat",objects:"Ukupno objekata",checks:"Kontrolni pregledi",openDefects:"Otvoreni nedostaci",reportsMade:"Izvještaji",recent:"Nedavna aktivnost",recentDesc:"Pregled posljednjih evidentiranih aktivnosti.",object:"Objekat",date:"Datum",activity:"Aktivnost",status:"Status",demoNote:"DEMO PRIKAZ: ovo je početni interaktivni prototip. Podaci se čuvaju samo u ovom pregledniku. Još nije povezan sa Supabase bazom niti je javno objavljen.",noData:"Još nema unesenih podataka.",createFirst:"Dodajte prvi objekat da biste započeli.",addDefect:"+ Novi nedostatak",addInspection:"+ Nova kontrola",newReport:"+ Novi izvještaj",name:"Naziv objekta",address:"Adresa",city:"Grad",country:"Država",investor:"Investitor",contractor:"Izvođač",save:"Sačuvaj",cancel:"Odustani",phase:"Faza radova",side:"Fasada / strana",title:"Naslov",description:"Opis",priority:"Prioritet",low:"Nizak",medium:"Srednji",high:"Visok",critical:"Kritičan",open:"Otvoren",resolved:"Saniran",project:"Objekat",category:"Kategorija",cause:"Pretpostavljeni uzrok",recommendation:"Preporuka za sanaciju",inspectionDate:"Datum kontrole",reportTitle:"Naslov izvještaja",teamInfo:"Uloge će se povezati sa stvarnim korisničkim nalozima nakon sigurnog povezivanja Supabase Auth sistema.",controller:"Kontrolor",investorRole:"Investitor",contractorRole:"Izvođač",noProjects:"Nema objekata",noDefects:"Nema evidentiranih nedostataka",noReports:"Nema izvještaja",saved:"Sačuvano u lokalnom demo prikazu.",required:"Popunite obavezna polja.",language:"Jezik"}, 
+de:{workspace:"ARBEITSBEREICH",dashboard:"Übersicht",projects:"Objekte",inspections:"Prüfungen",defects:"Mängel",documents:"DOKUMENTATION",reports:"Berichte",team:"Benutzer & Rollen",overview:"GESCHÄFTSÜBERSICHT",welcome:"Willkommen bei MN Fasada Quality Control",subtitle:"Übersicht der Qualitätskontrolle von Fassadenarbeiten.",newProject:"+ Neues Objekt",objects:"Objekte gesamt",checks:"Prüfungen",openDefects:"Offene Mängel",reportsMade:"Berichte",recent:"Letzte Aktivitäten",recentDesc:"Übersicht der zuletzt erfassten Aktivitäten.",object:"Objekt",date:"Datum",activity:"Aktivität",status:"Status",demoNote:"DEMO: Dies ist ein interaktiver Startprototyp. Daten werden nur in diesem Browser gespeichert. Noch keine Verbindung zu Supabase und noch nicht öffentlich veröffentlicht.",noData:"Noch keine Daten vorhanden.",createFirst:"Fügen Sie das erste Objekt hinzu.",addDefect:"+ Neuer Mangel",addInspection:"+ Neue Prüfung",newReport:"+ Neuer Bericht",name:"Objektname",address:"Adresse",city:"Stadt",country:"Land",investor:"Auftraggeber",contractor:"Auftragnehmer",save:"Speichern",cancel:"Abbrechen",phase:"Bauphase",side:"Fassadenseite",title:"Titel",description:"Beschreibung",priority:"Priorität",low:"Niedrig",medium:"Mittel",high:"Hoch",critical:"Kritisch",open:"Offen",resolved:"Behoben",project:"Objekt",category:"Kategorie",cause:"Vermutete Ursache",recommendation:"Sanierungsempfehlung",inspectionDate:"Prüfdatum",reportTitle:"Berichtstitel",teamInfo:"Die Rollen werden nach sicherer Anbindung an Supabase Auth mit echten Benutzerkonten verknüpft.",controller:"Kontrolleur",investorRole:"Auftraggeber",contractorRole:"Auftragnehmer",noProjects:"Keine Objekte",noDefects:"Keine Mängel erfasst",noReports:"Keine Berichte",saved:"Im lokalen Demo gespeichert.",required:"Bitte Pflichtfelder ausfüllen.",language:"Sprache"}
+};
+let lang="bs",page="dashboard";
+let data={projects:[],defects:[],inspections:[],reports:[]};
+try{data=JSON.parse(localStorage.getItem("mnqc_demo"))||data}catch(e){}
+const t=k=>dict[lang][k]||k, esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function persist(){localStorage.setItem("mnqc_demo",JSON.stringify(data));}
+function nav(p){page=p;document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===p));render()}
+function head(title,sub,action=""){return `<div class="page-head"><div><div class="eyebrow">MN FASADA CONSULTING</div><h1>${title}</h1><p class="sub">${sub||""}</p></div>${action}</div>`}
+function empty(title,desc){return `<div class="empty"><b>${title}</b>${desc||""}</div>`}
+function render(){
+let m=document.getElementById("main"),note=`<div class="notice">ⓘ ${t("demoNote")}</div>`;
+if(page==="dashboard"){
+m.innerHTML=head(t("welcome"),t("subtitle"),`<button class="btn primary" onclick="openProject()">${t("newProject")}</button>`)+note+
+`<div class="grid">
+<div class="card"><div class="metric-label">${t("objects")}</div><div class="metric">${data.projects.length}</div><div class="metric-note">MN Fasada Consulting</div></div>
+<div class="card"><div class="metric-label">${t("checks")}</div><div class="metric">${data.inspections.length}</div><div class="metric-note">ETICS / fasaderski radovi</div></div>
+<div class="card"><div class="metric-label">${t("openDefects")}</div><div class="metric">${data.defects.filter(x=>x.status!=="resolved").length}</div><div class="metric-note">Praćenje sanacija</div></div>
+<div class="card"><div class="metric-label">${t("reportsMade")}</div><div class="metric">${data.reports.length}</div><div class="metric-note">Dokumentacija objekata</div></div></div>
+<div class="section two"><div class="card"><div class="section-title"><h2>${t("recent")}</h2><button class="btn secondary" onclick="nav('projects')">${t("projects")} →</button></div><p class="sub">${t("recentDesc")}</p>${data.projects.length?`<div class="table-wrap"><table><thead><tr><th>${t("object")}</th><th>${t("city")}</th><th>${t("status")}</th></tr></thead><tbody>${data.projects.slice(-5).reverse().map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.city)}</td><td><span class="pill done">Aktivan</span></td></tr>`).join("")}</tbody></table></div>`:empty(t("noProjects"),t("createFirst"))}</div><div class="card"><div class="section-title"><h2>ETICS</h2><span class="pill">MN QC</span></div><p class="sub">Kontrola podloge, lijepljenja, tiplovanja, armiranja i završnog sloja.</p><div style="margin-top:18px;color:#c9a45c;font-size:28px">◆</div><b style="color:#101d35">MN Facade Inspector</b><p class="metric-note">Standardizovana evidencija kvaliteta fasaderskih radova.</p></div></div>`;
+}else if(page==="projects"){
+m.innerHTML=head(t("projects"),"Evidencija objekata i naručilaca.",`<button class="btn primary" onclick="openProject()">${t("newProject")}</button>`)+note+(data.projects.length?`<div class="table-wrap"><table><thead><tr><th>${t("name")}</th><th>${t("city")}</th><th>${t("country")}</th><th>${t("investor")}</th></tr></thead><tbody>${data.projects.map(p=>`<tr><td><b>${esc(p.name)}</b><br><small>${esc(p.address)}</small></td><td>${esc(p.city)}</td><td>${esc(p.country)}</td><td>${esc(p.investor)}</td></tr>`).join("")}</tbody></table></div>`:empty(t("noProjects"),t("createFirst")));
+}else if(page==="defects"){
+m.innerHTML=head(t("defects"),"Evidencija grešaka, prioriteta i preporuka sanacije.",`<button class="btn primary" onclick="openDefect()">${t("addDefect")}</button>`)+note+(data.defects.length?`<div class="table-wrap"><table><thead><tr><th>${t("title")}</th><th>${t("object")}</th><th>${t("priority")}</th><th>${t("status")}</th></tr></thead><tbody>${data.defects.map(d=>`<tr><td><b>${esc(d.title)}</b><br><small>${esc(d.description)}</small></td><td>${esc((data.projects.find(p=>p.id===d.project)?.name)||"—")}</td><td><span class="pill ${d.priority==='high'||d.priority==='critical'?'high':'open'}">${t(d.priority)}</span></td><td><span class="pill ${d.status==='resolved'?'done':'open'}">${t(d.status)}</span></td></tr>`).join("")}</tbody></table></div>`:empty(t("noDefects")));
+}else if(page==="inspections"){
+m.innerHTML=head(t("inspections"),"Kontrolni pregledi po fazama ETICS sistema.",`<button class="btn primary" onclick="openInspection()">${t("addInspection")}</button>`)+note+(data.inspections.length?`<div class="table-wrap"><table><thead><tr><th>${t("title")}</th><th>${t("object")}</th><th>${t("inspectionDate")}</th><th>${t("phase")}</th></tr></thead><tbody>${data.inspections.map(x=>`<tr><td>${esc(x.title)}</td><td>${esc((data.projects.find(p=>p.id===x.project)?.name)||"—")}</td><td>${esc(x.date)}</td><td>${esc(x.phase)}</td></tr>`).join("")}</tbody></table></div>`:empty(t("noData"),t("createFirst")));
+}else if(page==="reports"){
+m.innerHTML=head(t("reports"),"Pregled izrađenih izvještaja o kontroli kvaliteta.",`<button class="btn primary" onclick="openReport()">${t("newReport")}</button>`)+note+(data.reports.length?`<div class="table-wrap"><table><thead><tr><th>${t("reportTitle")}</th><th>${t("object")}</th><th>${t("date")}</th><th>${t("status")}</th></tr></thead><tbody>${data.reports.map(r=>`<tr><td>${esc(r.title)}</td><td>${esc((data.projects.find(p=>p.id===r.project)?.name)||"—")}</td><td>${esc(r.date)}</td><td><span class="pill open">Draft</span></td></tr>`).join("")}</tbody></table></div>`:empty(t("noReports")));
+}else{
+m.innerHTML=head(t("team"),"Upravljanje pristupom po objektu.")+note+`<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"><div class="card"><div class="eyebrow">01</div><h3>${t("controller")}</h3><p class="sub">Upravlja pregledima, nalazima i izvještajima.</p></div><div class="card"><div class="eyebrow">02</div><h3>${t("investorRole")}</h3><p class="sub">Pregled dokumentacije i statusa radova.</p></div><div class="card"><div class="eyebrow">03</div><h3>${t("contractorRole")}</h3><p class="sub">Dokumentovanje dodijeljenih sanacija.</p></div></div><div class="card section">${t("teamInfo")}</div>`;
+}
+m.innerHTML+=`<div class="footer">MN FASADA CONSULTING · QUALITY CONTROL · ${new Date().getFullYear()}</div>`;
+}
+function showModal(title,body){document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=body;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function projectOptions(){return data.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("")}
+function openProject(){showModal(t("newProject"),`<form onsubmit="saveProject(event)"><div class="form-grid">
+<div class="field full"><label>${t("name")} *</label><input name="name" required></div><div class="field full"><label>${t("address")}</label><input name="address"></div><div class="field"><label>${t("city")}</label><input name="city"></div><div class="field"><label>${t("country")}</label><select name="country"><option>Austrija</option><option>Bosna i Hercegovina</option></select></div><div class="field"><label>${t("investor")}</label><input name="investor"></div><div class="field"><label>${t("contractor")}</label><input name="contractor"></div></div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal()">${t("cancel")}</button><button class="btn primary">${t("save")}</button></div></form>`)}
+function saveProject(e){e.preventDefault();let f=new FormData(e.target);data.projects.push({id:crypto.randomUUID(),name:f.get("name"),address:f.get("address"),city:f.get("city"),country:f.get("country"),investor:f.get("investor"),contractor:f.get("contractor")});persist();closeModal();render();toast(t("saved"))}
+function projectSelect(){return `<div class="field"><label>${t("project")} *</label><select name="project" required>${projectOptions()}</select></div>`}
+function openDefect(){if(!data.projects.length){toast(t("createFirst"));return}showModal(t("addDefect"),`<form onsubmit="saveDefect(event)"><div class="form-grid">${projectSelect()}<div class="field"><label>${t("priority")}</label><select name="priority"><option value="low">${t("low")}</option><option value="medium" selected>${t("medium")}</option><option value="high">${t("high")}</option><option value="critical">${t("critical")}</option></select></div><div class="field full"><label>${t("title")} *</label><input name="title" required></div><div class="field full"><label>${t("description")}</label><textarea name="description"></textarea></div><div class="field"><label>${t("category")}</label><input name="category" placeholder="npr. armirni sloj"></div><div class="field"><label>${t("cause")}</label><input name="cause"></div><div class="field full"><label>${t("recommendation")}</label><textarea name="recommendation"></textarea></div></div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal()">${t("cancel")}</button><button class="btn primary">${t("save")}</button></div></form>`)}
+function saveDefect(e){e.preventDefault();let f=new FormData(e.target);data.defects.push({id:crypto.randomUUID(),project:f.get("project"),title:f.get("title"),description:f.get("description"),priority:f.get("priority"),category:f.get("category"),cause:f.get("cause"),recommendation:f.get("recommendation"),status:"open"});persist();closeModal();render();toast(t("saved"))}
+function openInspection(){if(!data.projects.length){toast(t("createFirst"));return}showModal(t("addInspection"),`<form onsubmit="saveInspection(event)"><div class="form-grid">${projectSelect()}<div class="field"><label>${t("inspectionDate")}</label><input name="date" type="date" value="${new Date().toISOString().slice(0,10)}"></div><div class="field full"><label>${t("title")} *</label><input name="title" required></div><div class="field"><label>${t("phase")}</label><select name="phase"><option>Podloga</option><option>Lijepljenje izolacije</option><option>Tiplovanje</option><option>Armiranje</option><option>Završni sloj</option><option>Sokl</option><option>Završna kontrola</option></select></div><div class="field"><label>${t("side")}</label><select name="side"><option>Sjever</option><option>Jug</option><option>Istok</option><option>Zapad</option><option>Sve strane</option></select></div></div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal()">${t("cancel")}</button><button class="btn primary">${t("save")}</button></div></form>`)}
+function saveInspection(e){e.preventDefault();let f=new FormData(e.target);data.inspections.push({id:crypto.randomUUID(),project:f.get("project"),title:f.get("title"),date:f.get("date"),phase:f.get("phase"),side:f.get("side")});persist();closeModal();render();toast(t("saved"))}
+function openReport(){if(!data.projects.length){toast(t("createFirst"));return}showModal(t("newReport"),`<form onsubmit="saveReport(event)"><div class="form-grid">${projectSelect()}<div class="field"><label>${t("date")}</label><input name="date" type="date" value="${new Date().toISOString().slice(0,10)}"></div><div class="field full"><label>${t("reportTitle")} *</label><input name="title" required></div></div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal()">${t("cancel")}</button><button class="btn primary">${t("save")}</button></div></form>`)}
+function saveReport(e){e.preventDefault();let f=new FormData(e.target);data.reports.push({id:crypto.randomUUID(),project:f.get("project"),title:f.get("title"),date:f.get("date")});persist();closeModal();render();toast(t("saved"))}
+function toast(s){let x=document.getElementById("toast");x.textContent=s;x.style.display="block";setTimeout(()=>x.style.display="none",2300)}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>nav(b.dataset.page)));
+document.getElementById("langBtn").onclick=()=>{lang=lang==="bs"?"de":"bs";document.documentElement.lang=lang;document.getElementById("langBtn").textContent=lang==="bs"?"BS / DE":"DE / BS";document.querySelectorAll("[data-i]").forEach(el=>el.textContent=t(el.dataset.i));render()};
+document.getElementById("closeModal").onclick=closeModal;
+render();
+</script>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const cfg = window.MN_SUPABASE_CONFIG || {};
+const gate = document.getElementById("authGate");
+const msg = document.getElementById("authMessage");
+const status = document.getElementById("authStatus");
+const signOutBtn = document.getElementById("signOutBtn");
+let sb = null;
+const say = (s, bad=false) => { msg.textContent=s; msg.style.color=bad?"#b94b4b":"#697589"; };
+if (!cfg.url || !cfg.publishableKey || cfg.publishableKey.includes("PASTE_")) {
+  say("Prije prijave unesite Publishable key u config.js. Nemojte koristiti secret ili service_role ključ.", true);
+  status.textContent="Supabase: konfiguracija nedovršena";
+} else {
+  try {
+    sb = createClient(cfg.url, cfg.publishableKey);
+    status.textContent="Supabase: spreman";
+    const { data:{session} } = await sb.auth.getSession();
+    if (session) await showSignedIn(session.user);
+    sb.auth.onAuthStateChange((_event, session) => {
+      if (session) showSignedIn(session.user);
+      else { gate.style.display="flex"; signOutBtn.hidden=true; status.textContent="Supabase: odjavljen"; }
+    });
+  } catch(e) { say("Greška pri povezivanju. Provjerite URL i Publishable key.", true); }
+}
+async function showSignedIn(user) {
+  gate.style.display="none";
+  signOutBtn.hidden=false;
+  status.textContent="Prijavljen korisnik: "+(user.email || "nalog");
+  // Samo provjera pristupa; ne mijenjamo podatke i ne zaobilazimo RLS.
+  const tables=["projects","inspections","defects","reports"];
+  const checks=await Promise.all(tables.map(async table=>{
+    const {error}=await sb.from(table).select("*",{count:"exact",head:true});
+    return {table,ok:!error};
+  }));
+  const failed=checks.filter(x=>!x.ok);
+  if(failed.length) {
+    console.warn("Provjera pristupa tabelama:", failed);
+    status.textContent="Prijavljen • provjeriti RLS/tabele";
+  } else status.textContent="Supabase prijava aktivna";
+}
+document.getElementById("loginBtn").addEventListener("click", async()=>{
+  if(!sb){say("Prvo dovršite konfiguraciju Supabase klijenta.",true);return;}
+  const email=document.getElementById("authEmail").value.trim();
+  const password=document.getElementById("authPassword").value;
+  if(!email||!password){say("Unesite e-mail i lozinku.",true);return;}
+  say("Prijava u toku…");
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  say(error?error.message:"Prijava uspješna.");
+});
+document.getElementById("signupBtn").addEventListener("click", async()=>{
+  if(!sb){say("Prvo dovršite konfiguraciju Supabase klijenta.",true);return;}
+  const email=document.getElementById("authEmail").value.trim();
+  const password=document.getElementById("authPassword").value;
+  if(!email||password.length<8){say("Unesite e-mail i lozinku od najmanje 8 znakova.",true);return;}
+  say("Registracija u toku…");
+  const {data,error}=await sb.auth.signUp({email,password});
+  if(error) say(error.message,true);
+  else say(data.session?"Nalog je kreiran.":"Provjerite e-mail i potvrdite registraciju.");
+});
+signOutBtn.addEventListener("click", async()=>{if(sb) await sb.auth.signOut();});
+</script>
+</body></html>
