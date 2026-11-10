@@ -1,4 +1,4 @@
-window.MN_SUPABASE_CONFIG = {
-  url: "https://uwkhpnnxnplbsetnzvzt.supabase.co",
-  publishableKey: "PASTE_YOUR_NEW_PUBLISHABLE_KEY_HERE"
-};
+window.MN_SUPABASE_CONFIG = {  
+  url: "https://uwkhpnnxnplbsetnzvzt.supabase.co",  
+  publishableKey: "sb_publishable_zbjIpnwQ_SvKAGUzA8qLwg_8Q2ZI3Gx"  
+};  
