@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101d35">
+<title>MN Fasada Quality Control</title>
+<style>
+:root{--navy:#101d35;--navy2:#192b49;--gold:#c9a45c;--ink:#182338;--muted:#697589;--line:#e4e8ef;--bg:#f4f6fa;--green:#16845b;--red:#b94b4b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.topbar{background:var(--navy);color:white;padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:11px}.mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-weight:800}.brand strong{display:block;letter-spacing:.08em}.brand small{color:#c3cddd;font-size:10px;letter-spacing:.12em}
+button,.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700}.primary{background:var(--navy);color:#fff}.secondary{background:#fff;border:1px solid var(--line);color:var(--navy)}.gold{background:var(--gold);color:var(--navy)}.danger{background:#fff0f0;color:#a33b3b;border:1px solid #f0cccc}
+.auth-wrap{min-height:calc(100vh - 72px);display:grid;place-items:center;padding:24px}.auth-card{width:min(470px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 18px 50px #101d3514}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.16em;font-weight:800}.auth-card h1{font-size:28px;margin:6px 0;color:var(--navy)}.muted{color:var(--muted)}.field{display:flex;flex-direction:column;gap:6px;margin:14px 0}.field label{font-size:13px;font-weight:700}.field input,.field select{width:100%;border:1px solid #dce2eb;border-radius:10px;padding:13px;background:white;color:var(--ink)}.wide{width:100%;margin-top:10px}.switch{display:flex;gap:8px;margin:18px 0}.switch button{flex:1}.message{margin-top:14px;padding:12px;border-radius:10px;font-size:13px;display:none}.message.error{display:block;background:#fff0f0;color:#a33b3b}.message.success{display:block;background:#eaf7f0;color:#176b49}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1440px;margin:auto;min-height:calc(100vh - 72px)}aside{background:#fff;border-right:1px solid var(--line);padding:20px 13px}.nav{width:100%;text-align:left;background:transparent;color:#526078;margin:3px 0}.nav.active{background:#edf1f7;color:var(--navy)}main{padding:26px;min-width:0}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.head h1{margin:4px 0;color:var(--navy);font-size:26px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.metric{font-size:30px;font-weight:800;color:var(--navy)}.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:520px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-size:13px}th{color:#8993a3;font-size:11px;text-transform:uppercase}.pill{display:inline-block;padding:4px 9px;border-radius:20px;background:#eaf7f0;color:#176b49;font-size:11px;font-weight:700}.hidden{display:none!important}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.spacer{flex:1}.notice{padding:12px 14px;background:#fff8e9;border:1px solid #f0dfb8;border-radius:10px;color:#765b25;margin:14px 0;font-size:13px}
+@media(max-width:700px){.layout{display:block}aside{display:flex;overflow:auto;padding:8px;gap:5px;border-bottom:1px solid var(--line)}.nav{white-space:nowrap;width:auto;margin:0}main{padding:18px 13px}.grid{grid-template-columns:1fr}.auth-card{padding:22px}.head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="mark">MN</div><div><strong>MN FASADA</strong><small>QUALITY CONTROL</small></div></div>
+ <div class="row"><span id="userLabel" style="font-size:12px;color:#d0d8e4"></span><button id="logoutBtn" class="secondary hidden">Odjava</button></div>
+</header>
+
+<section id="authView" class="auth-wrap">
+ <div class="auth-card">
+  <div class="eyebrow">MN FASADA CONSULTING</div>
+  <h1 id="authTitle">Prijava u Quality Control</h1>
+  <p class="muted" id="authSubtitle">Pristup je omogućen registrovanim korisnicima.</p>
+  <div class="switch">
+   <button id="showLogin" class="primary">Prijava</button>
+   <button id="showSignup" class="secondary">Registracija</button>
+  </div>
+  <form id="authForm">
+   <div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="email" placeholder="ime@firma.at" required></div>
+   <div class="field"><label for="password">Lozinka</label><input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="Najmanje 8 znakova" required></div>
+   <button class="primary wide" id="submitAuth" type="submit">Prijava</button>
+  </form>
+  <button id="resetPassword" class="secondary wide">Zaboravljena lozinka?</button>
+  <div id="authMessage" class="message"></div>
+  <p class="muted" style="font-size:12px;margin-top:18px">Kod registracije će Supabase poslati poruku za potvrdu e-mail adrese, ako je potvrda uključena u postavkama projekta.</p>
+ </div>
+</section>
+
+<div id="appView" class="layout hidden">
+ <aside>
+  <button class="nav active" data-page="dashboard">▦ Pregled</button>
+  <button class="nav" data-page="projects">⌂ Objekti</button>
+  <button class="nav" data-page="team">♙ Korisnici i uloge</button>
+ </aside>
+ <main id="main"></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  1) Unesite Project URL i anon/public Publishable key iz Supabase Settings > API.
+  2) Nikada ne stavljajte service_role ili secret key u ovaj fajl.
+*/
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+let supabaseClient = null;
+let currentUser = null;
+let currentProfile = null;
+let authMode = "login";
+let currentPage = "dashboard";
+
+const $ = (id) => document.getElementById(id);
+function message(text, type="success") {
+  const el=$("authMessage"); el.textContent=text; el.className="message "+type;
+}
+function clearMessage(){ $("authMessage").className="message"; $("authMessage").textContent=""; }
+function configured(){
+  return SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE_") &&
+    SUPABASE_PUBLISHABLE_KEY.length>20 &&
+    !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_");
+}
+function setMode(mode){
+  authMode=mode; clearMessage();
+  $("authTitle").textContent=mode==="login"?"Prijava u Quality Control":"Registracija korisnika";
+  $("authSubtitle").textContent=mode==="login"?"Prijavite se svojim e-mailom i lozinkom.":"Kreirajte korisnički račun za MN Fasada Quality Control.";
+  $("submitAuth").textContent=mode==="login"?"Prijava":"Registracija";
+  $("showLogin").className=mode==="login"?"primary":"secondary";
+  $("showSignup").className=mode==="signup"?"primary":"secondary";
+  $("resetPassword").classList.toggle("hidden",mode!=="login");
+  $("password").autocomplete=mode==="login"?"current-password":"new-password";
+}
+async function loadProfile(){
+  const {data,error}=await supabaseClient.from("profiles").select("id,email,role").eq("id",currentUser.id).maybeSingle();
+  if(error) throw error;
+  currentProfile=data;
+}
+function showApp(){
+  $("authView").classList.add("hidden"); $("appView").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden"); $("userLabel").textContent=currentUser.email||"";
+  renderPage(currentPage);
+}
+function showAuth(){
+  $("authView").classList.remove("hidden"); $("appView").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden"); $("userLabel").textContent="";
+}
+async function handleAuthSubmit(e){
+  e.preventDefault(); clearMessage();
+  if(!configured()){message("Prvo unesite Supabase URL i Publishable key u vrh index.html datoteke.","error");return;}
+  const email=$("email").value.trim(); const password=$("password").value;
+  $("submitAuth").disabled=true;
+  try{
+    if(authMode==="signup"){
+      const {data,error}=await supabaseClient.auth.signUp({
+        email,password,
+        options:{emailRedirectTo:window.location.origin}
+      });
+      if(error) throw error;
+      if(data.session){
+        message("Registracija je uspješna. Korisnički račun je aktivan.","success");
+      }else{
+        message("Registracija je zaprimljena. Otvorite e-mail i potvrdite adresu prije prijave.","success");
+      }
+    }else{
+      const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+      if(error) throw error;
+    }
+  }catch(err){message(err.message||"Greška pri autentifikaciji.","error");}
+  finally{$("submitAuth").disabled=false;}
+}
+async function sendReset(){
+  clearMessage();
+  if(!configured()){message("Prvo unesite Supabase URL i Publishable key.","error");return;}
+  const email=$("email").value.trim();
+  if(!email){message("Unesite e-mail adresu u polje iznad.","error");return;}
+  try{
+    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});
+    if(error) throw error;
+    message("Ako račun postoji, poslana je poruka za promjenu lozinke.","success");
+  }catch(err){message(err.message||"Nije moguće poslati poruku.","error");}
+}
+async function signOut(){
+  const {error}=await supabaseClient.auth.signOut();
+  if(error) alert(error.message);
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+async function renderPage(page){
+  currentPage=page;
+  document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  if(page==="dashboard"){
+    $("main").innerHTML=`<div class="head"><div><div class="eyebrow">MN FASADA CONSULTING</div><h1>Kontrolna tabla</h1><p class="muted">Dobro došli u MN Fasada Quality Control.</p></div></div>
+    <div class="notice">Prijavljeni ste u sistem. Podaci se učitavaju iz Supabase baze.</div>
+    <div class="grid"><div class="card"><div class="muted">Korisnik</div><div style="font-weight:800">${esc(currentUser.email)}</div></div><div class="card"><div class="muted">Uloga</div><div class="metric" style="font-size:22px">${esc(currentProfile?.role||"user")}</div></div><div class="card"><div class="muted">Status</div><span class="pill">Prijavljen</span></div></div>`;
+  } else if(page==="projects"){
+    $("main").innerHTML=`<div class="head"><div><div class="eyebrow">MN FASADA CONSULTING</div><h1>Objekti</h1><p class="muted">Evidencija objekata u zajedničkoj bazi.</p></div><button class="primary" id="addProject">+ Novi objekat</button></div><div id="projectList" class="table-wrap">Učitavanje...</div>`;
+    $("addProject").onclick=addProject;
+    await loadProjects();
+  } else if(page==="team"){
+    $("main").innerHTML=`<div class="head"><div><div class="eyebrow">ADMINISTRACIJA</div><h1>Korisnici i uloge</h1><p class="muted">Pregled profila i dodjela uloga.</p></div></div><div id="teamList" class="table-wrap">Učitavanje...</div><p class="muted" style="font-size:12px">Dodjela uloga dostupna je samo administratoru. Prvi administrator se postavlja jednom SQL naredbom u Supabase SQL Editoru.</p>`;
+    await loadTeam();
+  }
+}
+async function loadProjects(){
+  const box=$("projectList");
+  const {data,error}=await supabaseClient.from("projects").select("id,name,city,country,created_at").order("created_at",{ascending:false});
+  if(error){box.innerHTML=`<div class="card">Greška: ${esc(error.message)}<br><small>Provjerite da li ste izvršili SQL skriptu.</small></div>`;return;}
+  if(!data.length){box.innerHTML='<div class="card muted">Još nema unesenih objekata.</div>';return;}
+  box.innerHTML=`<table><thead><tr><th>Naziv objekta</th><th>Grad</th><th>Država</th><th>Datum unosa</th></tr></thead><tbody>${data.map(p=>`<tr><td><b>${esc(p.name)}</b></td><td>${esc(p.city)}</td><td>${esc(p.country)}</td><td>${new Date(p.created_at).toLocaleDateString("bs-BA")}</td></tr>`).join("")}</tbody></table>`;
+}
+async function addProject(){
+  const name=prompt("Naziv objekta:");
+  if(!name?.trim())return;
+  const city=prompt("Grad:")||"";
+  const country=prompt("Država:")||"";
+  const {error}=await supabaseClient.from("projects").insert({name:name.trim(),city,country,created_by:currentUser.id});
+  if(error){alert("Nije sačuvano: "+error.message);return;}
+  await loadProjects();
+}
+async function loadTeam(){
+  const box=$("teamList");
+  if(currentProfile?.role!=="admin"){
+    box.innerHTML='<div class="card muted">Ovaj dio je dostupan samo administratoru.</div>';return;
+  }
+  const {data,error}=await supabaseClient.from("profiles").select("id,email,role,created_at").order("created_at",{ascending:false});
+  if(error){box.innerHTML=`<div class="card">Greška: ${esc(error.message)}</div>`;return;}
+  box.innerHTML=`<table><thead><tr><th>E-mail</th><th>Uloga</th><th>Promijeni ulogu</th></tr></thead><tbody>${data.map(u=>`<tr><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td><select data-role-user="${u.id}" ${u.id===currentUser.id?"disabled":""}><option value="user" ${u.role==="user"?"selected":""}>Korisnik</option><option value="controller" ${u.role==="controller"?"selected":""}>Kontrolor</option><option value="investor" ${u.role==="investor"?"selected":""}>Investitor</option><option value="contractor" ${u.role==="contractor"?"selected":""}>Izvođač</option><option value="admin" ${u.role==="admin"?"selected":""}>Administrator</option></select></td></tr>`).join("")}</tbody></table>`;
+  box.querySelectorAll("select[data-role-user]").forEach(sel=>sel.addEventListener("change",async()=>{
+    const {error}=await supabaseClient.from("profiles").update({role:sel.value}).eq("id",sel.dataset.roleUser);
+    if(error){alert("Uloga nije promijenjena: "+error.message);await loadTeam();}else{alert("Uloga je promijenjena.");}
+  }));
+}
+async function boot(){
+  $("showLogin").onclick=()=>setMode("login"); $("showSignup").onclick=()=>setMode("signup");
+  $("authForm").addEventListener("submit",handleAuthSubmit); $("resetPassword").onclick=sendReset;
+  $("logoutBtn").onclick=signOut;
+  document.querySelectorAll(".nav").forEach(b=>b.onclick=()=>renderPage(b.dataset.page));
+  if(!configured()){showAuth();message("Aplikacija još nije podešena. Unesite Supabase URL i Publishable key u index.html.","error");return;}
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(session){
+    currentUser=session.user;
+    try{await loadProfile();showApp();}catch(e){showAuth();message("Ne mogu učitati profil. Provjerite SQL skriptu: "+e.message,"error");}
+  }else showAuth();
+  supabaseClient.auth.onAuthStateChange((_event,session)=>{
+    if(session){
+      currentUser=session.user;
+      // Odloži čitanje profila izvan auth callback-a da se izbjegne blokada auth lock-a.
+      setTimeout(async()=>{
+        try{await loadProfile();showApp();}catch(e){showAuth();message("Greška profila: "+e.message,"error");}
+      },0);
+    }else{currentUser=null;currentProfile=null;showAuth();}
+  });
+}
+boot();
+</script>
+</body>
+</html>
